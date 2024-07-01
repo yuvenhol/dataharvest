@@ -1,0 +1,38 @@
+[project]
+name = "dataharvest"
+version = "0.1.1"
+description = "Add your description here"
+authors = [
+    { name = "yuvenhol", email = "yuvenhol@gmail.com" }
+]
+dependencies = [
+    "playwright>=1.44.0",
+    "html2text>=2024.2.26",
+]
+readme = "README.md"
+requires-python = ">= 3.8"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.pytest.ini_options]
+testpaths = "tests"
+python_files = "tests.py test_*.py *_tests.py"
+
+[tool.rye]
+managed = true
+dev-dependencies = [
+    "pytest>=8.2.2",
+    "pytest-asyncio>=0.23.7",
+]
+
+[tool.pyright]
+venvPath = "."
+venv = ".venv"
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/dataharvest"]
