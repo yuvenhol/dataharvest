@@ -22,7 +22,6 @@ class CommonSpider(BaseSpider):
             page.goto(url)
             page.wait_for_load_state('load')
             html = page.content()
-            browser.close()
             document = Document(url=page.url, metadata={}, page_content=html)
             return document
 

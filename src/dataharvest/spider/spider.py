@@ -18,10 +18,11 @@ class BaseSpider(ABC):
 
 
 class AutoSpider:
+    _spiders = []
 
     def __init__(self):
-        self._spiders = [cls() for cls in BaseSpider.__subclasses__()]
-        self._spiders.sort(key=lambda spider: spider.index)
+        AutoSpider._spiders = [cls() for cls in BaseSpider.__subclasses__()]
+        AutoSpider._spiders.sort(key=lambda spider: spider.index)
 
     def _route(self, url: str) -> BaseSpider:
         for spider in self._spiders:

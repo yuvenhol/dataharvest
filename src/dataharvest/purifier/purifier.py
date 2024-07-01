@@ -16,10 +16,11 @@ class BasePurifier(ABC):
 
 
 class AutoPurifier:
+    _purifiers = []
 
     def __init__(self):
-        self._purifiers = [cls() for cls in BasePurifier.__subclasses__()]
-        self._purifiers.sort(key=lambda purifier: purifier.index)
+        AutoPurifier._purifiers = [cls() for cls in BasePurifier.__subclasses__()]
+        AutoPurifier._purifiers.sort(key=lambda purifier: purifier.index)
 
     def _route(self, url: str) -> BasePurifier:
         for purifier in self._purifiers:

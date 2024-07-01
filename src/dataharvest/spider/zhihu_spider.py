@@ -17,10 +17,6 @@ class ZhihuSpider(BaseSpider):
         with sync_playwright() as p:
             browser = p.webkit.launch(headless=True)
             page = browser.new_page()
-            js = """
-                    Object.defineProperties(navigator, {webdriver:{get:()=>undefined}});
-                    """
-            page.add_init_script(js)
             page.goto(url)
             page.wait_for_load_state(state='networkidle', timeout=3000)
             html = page.content()
@@ -30,11 +26,7 @@ class ZhihuSpider(BaseSpider):
         async with async_playwright() as p:
             browser = await p.webkit.launch()
             page = await browser.new_page()
-            js = """
-                    Object.defineProperties(navigator, {webdriver:{get:()=>undefined}});
-                    """
-            await page.add_init_script(js)
             await page.goto(url)
-            await page.wait_for_load_state('load')
+            await page.wait_for_load_state(state='networkidle', timeout=3000)
             html = await page.content()
             return Document(url=url, metadata={}, page_content=html)
