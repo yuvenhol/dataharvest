@@ -7,7 +7,6 @@ from parsel import Selector
 
 
 class SohuPurifier(BasePurifier):
-    index = 101
 
     def __init__(self):
         self.convertor = html2text.HTML2Text()
