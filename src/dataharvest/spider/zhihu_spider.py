@@ -9,7 +9,7 @@ class ZhihuArticleSpider(BaseSpider):
     index = 100
 
     def match(self, url: str) -> bool:
-        return "zhuanlan.zhihu.com/p/" in url
+        return ".zhihu.com/p/" in url
 
     def crawl(self, url: str):
         with sync_playwright() as p:
