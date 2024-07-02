@@ -1,6 +1,6 @@
 [project]
 name = "dataharvest"
-version = "0.1.1"
+version = "0.1.2"
 description = "Add your description here"
 authors = [
     { name = "yuvenhol", email = "yuvenhol@gmail.com" }
@@ -8,6 +8,7 @@ authors = [
 dependencies = [
     "playwright>=1.44.0",
     "html2text>=2024.2.26",
+    "parsel>=1.9.1",
 ]
 readme = "README.md"
 requires-python = ">= 3.8"

@@ -5,7 +5,7 @@ from dataharvest.base import Document
 from dataharvest.spider import BaseSpider
 
 
-class ZhihuSpider(BaseSpider):
+class ZhihuArticleSpider(BaseSpider):
     index = 100
 
     def match(self, url: str) -> bool:

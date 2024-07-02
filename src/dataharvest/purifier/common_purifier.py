@@ -10,6 +10,8 @@ class CommonPurifier(BasePurifier):
     def __init__(self):
         h = html2text.HTML2Text()
         h.ignore_links = True
+        h.body_width = 0
+        h.single_line_break = True
         h.ignore_images = True
         self.converter = h
 
