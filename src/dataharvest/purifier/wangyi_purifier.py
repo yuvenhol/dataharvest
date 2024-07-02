@@ -1,9 +1,10 @@
 import re
 
-from dataharvest.base import Document
-from dataharvest.purifier.purifier import BasePurifier
 import html2text
 from parsel import Selector
+
+from dataharvest.base import Document
+from dataharvest.purifier.purifier import BasePurifier
 
 
 class WangYiPurifier(BasePurifier):
@@ -14,14 +15,7 @@ class WangYiPurifier(BasePurifier):
         self.convertor.body_width = 0
 
     def match(self, url: str) -> bool:
-        flag = False
-
-        groups = re.findall(r"www.163.com/(\w*)/article", url, re.MULTILINE)
-
-        if len(groups) > 0:
-            flag = True
-
-        return flag
+        return re.match(r"^.+?www.163.com/\w+/article/.+", url) is not None
 
     def purify(self, doc: Document) -> Document:
         selector = Selector(doc.page_content)
