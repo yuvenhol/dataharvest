@@ -2,7 +2,7 @@ import html2text
 from parsel import Selector
 
 from dataharvest.base import Document
-from dataharvest.purifier import BasePurifier
+from dataharvest.purifier.purifier import BasePurifier
 
 
 class BaiduBaikePurifier(BasePurifier):
