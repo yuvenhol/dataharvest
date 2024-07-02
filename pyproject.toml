@@ -26,6 +26,7 @@ managed = true
 dev-dependencies = [
     "pytest>=8.2.2",
     "pytest-asyncio>=0.23.7",
+    "setuptools>=70.2.0",
 ]
 
 [tool.pyright]
