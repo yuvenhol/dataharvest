@@ -1,6 +1,6 @@
 [project]
 name = "dataharvest"
-version = "0.1.5"
+version = "0.1.6"
 description = "Add your description here"
 authors = [
     { name = "yuvenhol", email = "yuvenhol@gmail.com" }
