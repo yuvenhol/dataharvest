@@ -9,6 +9,7 @@ dependencies = [
     "playwright>=1.44.0",
     "html2text>=2024.2.26",
     "parsel>=1.9.1",
+    "cssutils>=2.11.1",
 ]
 readme = "README.md"
 requires-python = ">= 3.8"
@@ -16,10 +17,6 @@ requires-python = ">= 3.8"
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
-
-[tool.pytest.ini_options]
-testpaths = "tests"
-python_files = "tests.py test_*.py *_tests.py"
 
 [tool.rye]
 managed = true
