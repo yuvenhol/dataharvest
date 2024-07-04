@@ -29,6 +29,14 @@ dev-dependencies = [
     "setuptools>=70.2.0",
 ]
 
+[tool.pytest.ini_options]
+testpaths = "tests"
+python_files = "tests.py test_*.py *_tests.py"
+log_cli = true
+log_cli_level = "INFO"
+log_cli_format = "%(asctime)s %(levelname)s %(filename)s [line:%(lineno)d] - %(message)s"
+log_cli_date_format = "%H:%M:%S"
+
 [tool.pyright]
 venvPath = "."
 venv = ".venv"
