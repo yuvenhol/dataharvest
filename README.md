@@ -35,6 +35,7 @@ DataHarvest 是一个用于数据搜索、爬取、清洗的工具。
 
 ```shell
 pip install dataharvest
+playwright install
 ```
 
 ## 最佳实践
@@ -42,7 +43,7 @@ pip install dataharvest
 ### 搜索
 
 ```python
-from dataharvest.searcher.tavily_searcher import TavilySearcher
+from dataharvest.searcher import TavilySearcher
 
 api_key = "xxx"  # 或者设置环境变量 TAVILY_API_KEY
 
@@ -50,7 +51,7 @@ searcher = TavilySearcher(api_key)
 searcher.search("战国水晶杯")
 ```
 
-```python
+```
 SearchResult(keyword='战国水晶杯', answer=None, images=None, items=[
     SearchResultItem(title='战国水晶杯_百度百科', url='https://baike.baidu.com/item/战国水晶杯/7041521', score=0.98661,
                      description='战国水晶杯为战国晚期水晶器皿，于1990年出土于浙江省杭州市半山镇石塘村，现藏于杭州博物馆。战国水晶杯高15.4厘米、口径7.8厘米、底径5.4厘米，整器略带淡琥珀色，局部可见絮状包裹体；器身为敞口，平唇，斜直壁，圆底，圈足外撇；光素无纹，造型简洁。',
@@ -60,7 +61,6 @@ SearchResult(keyword='战国水晶杯', answer=None, images=None, items=[
 ### 爬虫
 
 ```python
-from dataharvest.purifier import AutoPurifier
 from dataharvest.spider import AutoSpider
 
 url = "https://baike.so.com/doc/5579340-5792710.html?src=index#entry_concern"
