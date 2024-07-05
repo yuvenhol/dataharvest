@@ -1,7 +1,7 @@
 import html2text
 
-from dataharvest.base import Document
 from dataharvest.purifier.purifier import BasePurifier
+from dataharvest.schema import Document
 
 
 class CommonPurifier(BasePurifier):

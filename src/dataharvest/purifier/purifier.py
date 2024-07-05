@@ -1,18 +1,5 @@
-from abc import ABC, abstractmethod
-
-from dataharvest.base import Document
-
-
-class BasePurifier(ABC):
-    index = 0
-
-    @abstractmethod
-    def match(self, url: str) -> bool:
-        raise NotImplementedError
-
-    @abstractmethod
-    def purify(self, doc: Document) -> Document:
-        raise NotImplementedError
+from dataharvest.purifier.base import BasePurifier
+from dataharvest.schema import Document
 
 
 class AutoPurifier:

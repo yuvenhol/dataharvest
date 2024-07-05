@@ -10,6 +10,7 @@ dependencies = [
     "html2text>=2024.2.26",
     "parsel>=1.9.1",
     "cssutils>=2.11.1",
+    "httpx>=0.27.0",
 ]
 readme = "README.md"
 requires-python = ">= 3.8"

@@ -1,5 +1,5 @@
-from dataharvest.purifier.purifier import AutoPurifier
-from dataharvest.spider.spider import AutoSpider
+from dataharvest.purifier import AutoPurifier
+from dataharvest.spider import AutoSpider
 
 
 def test_auto_purifier():
@@ -33,6 +33,7 @@ def test_auto_purifier_baijiahao():
     url = "https://baijiahao.baidu.com/s?id=1800439094856373024"
     auto_spider = AutoSpider()
     doc = auto_spider.crawl(url)
+    print(doc)
     auto_purifier = AutoPurifier()
     doc = auto_purifier.purify(doc)
     print(doc)
@@ -87,8 +88,11 @@ def test_auto_purifier_sobaike():
     url = "https://baike.so.com/doc/5579340-5792710.html?src=index#entry_concern"
     auto_spider = AutoSpider()
     doc = auto_spider.crawl(url)
+    print(doc)
     auto_purifier = AutoPurifier()
     doc = auto_purifier.purify(doc)
+    with open("sobaike.md", "w", encoding="utf-8") as f:
+        f.write(doc.page_content)
     print(doc)
 
 

@@ -1,9 +1,10 @@
 import re
 
-from dataharvest.base import Document
-from dataharvest.purifier.purifier import BasePurifier
 import html2text
 from parsel import Selector
+
+from dataharvest.purifier.purifier import BasePurifier
+from dataharvest.schema import Document
 
 
 class SohuPurifier(BasePurifier):

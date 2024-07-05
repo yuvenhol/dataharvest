@@ -1,7 +1,7 @@
 from playwright.async_api import async_playwright
 from playwright.sync_api import sync_playwright
 
-from dataharvest.base import Document
+from dataharvest.schema import Document
 from dataharvest.spider.spider import BaseSpider
 
 
@@ -11,7 +11,7 @@ class CommonSpider(BaseSpider):
     def match(self, url: str) -> bool:
         return True
 
-    def crawl(self, url: str):
+    def crawl(self, url: str) -> Document:
         with sync_playwright() as playwright:
             browser = playwright.chromium.launch()
             page = browser.new_page()
@@ -25,7 +25,7 @@ class CommonSpider(BaseSpider):
             document = Document(url=page.url, metadata={}, page_content=html)
             return document
 
-    async def a_crawl(self, url: str):
+    async def a_crawl(self, url: str) -> Document:
         async with async_playwright() as p:
             browser = await p.chromium.launch()
             page = await browser.new_page()

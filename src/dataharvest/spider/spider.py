@@ -1,20 +1,5 @@
-from abc import ABC, abstractmethod
-
-
-class BaseSpider(ABC):
-    index = 0
-
-    @abstractmethod
-    def match(self, url: str) -> bool:
-        raise NotImplementedError
-
-    @abstractmethod
-    def crawl(self, url: str):
-        raise NotImplementedError
-
-    @abstractmethod
-    async def a_crawl(self, url: str):
-        raise NotImplementedError
+from dataharvest.schema import Document
+from dataharvest.spider.base import BaseSpider
 
 
 class AutoSpider:
@@ -30,10 +15,10 @@ class AutoSpider:
                 return spider
         raise Exception(f"Cannot find spider for url: {url}")
 
-    def crawl(self, url: str):
+    def crawl(self, url: str) -> Document:
         spider = self._route(url)
         return spider.crawl(url)
 
-    async def a_crawl(self, url: str):
+    async def a_crawl(self, url: str) -> Document:
         spider = self._route(url)
         return await spider.a_crawl(url)

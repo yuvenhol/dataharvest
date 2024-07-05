@@ -1,8 +1,8 @@
 import html2text
 from parsel import Selector
 
-from dataharvest.base import Document
 from dataharvest.purifier.purifier import BasePurifier
+from dataharvest.schema import Document
 
 
 class SogouBaiKePurifier(BasePurifier):

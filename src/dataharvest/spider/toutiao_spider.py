@@ -1,7 +1,7 @@
 from playwright.async_api import async_playwright
 from playwright.sync_api import sync_playwright
 
-from dataharvest.base import Document
+from dataharvest.schema import Document
 from dataharvest.spider.spider import BaseSpider
 
 
