@@ -1,6 +1,8 @@
 # DataHarvest
 
-DataHarvest 是一个用于数据搜索、爬取、清洗的工具。
+DataHarvest 是一个用于数据搜索🔍、爬取🕷、清洗🧽的工具。
+
+AI时代，数据是一切的基石，DataHarvest 能够帮助获取干净有效的数据。
 
 ![DataHarvest](https://yuvenhol-1255563050.cos.ap-beijing.myqcloud.com/img/202407022046608.png)
 
@@ -102,3 +104,7 @@ tasks = [dh.a_crawl_and_purify(item.url) for item in r.items]
 loop = asyncio.get_event_loop()
 docs = loop.run_until_complete(asyncio.gather(*tasks))
 ```
+
+## 鸣谢
+
+伙伴们如果觉着这个项目对你有帮助，那么请帮助点一个star✨。如果觉着存在问题或者有其他需求，那么欢迎在issue提出。当然，我们非常欢迎您加入帮忙完善。
