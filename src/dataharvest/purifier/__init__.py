@@ -12,9 +12,19 @@ from dataharvest.purifier.toutiao_purifier import ToutiaoPurifier
 from dataharvest.purifier.wangyi_purifier import WangYiPurifier
 from dataharvest.purifier.wechat_purifier import WechatPurifier
 
-__all__ = ["BasePurifier", "CommonPurifier", "AutoPurifier", "BaiduBaikePurifier",
-           "SohuPurifier", "SllPurifier", "BaiJiaHaoPurifier", "WangYiPurifier",
-           "SogouBaiKePurifier", "BilibiliPurifier", "QQNewPurifier",
-           "SoBaikePurifier", "ToutiaoPurifier", "WechatPurifier"]
-
-
+__all__ = [
+    "BasePurifier",
+    "CommonPurifier",
+    "AutoPurifier",
+    "BaiduBaikePurifier",
+    "SohuPurifier",
+    "SllPurifier",
+    "BaiJiaHaoPurifier",
+    "WangYiPurifier",
+    "SogouBaiKePurifier",
+    "BilibiliPurifier",
+    "QQNewPurifier",
+    "SoBaikePurifier",
+    "ToutiaoPurifier",
+    "WechatPurifier",
+]

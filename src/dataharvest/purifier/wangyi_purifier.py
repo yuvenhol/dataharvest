@@ -8,7 +8,6 @@ from dataharvest.schema import Document
 
 
 class WangYiPurifier(BasePurifier):
-
     def __init__(self):
         self.convertor = html2text.HTML2Text()
         self.convertor.ignore_links = True
@@ -21,7 +20,9 @@ class WangYiPurifier(BasePurifier):
         selector = Selector(doc.page_content)
 
         # 清洗无用标签
-        selector.xpath("//div[@class='post_body']/div[@style='height: 0px;overflow:hidden;']").drop()
+        selector.xpath(
+            "//div[@class='post_body']/div[@style='height: 0px;overflow:hidden;']"
+        ).drop()
 
         # 标题
         title_label = selector.xpath("//h1[@class='post_title']").get()

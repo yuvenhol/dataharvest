@@ -8,7 +8,6 @@ from dataharvest.schema import Document
 
 
 class WechatPurifier(BasePurifier):
-
     def __init__(self):
         self.convertor = html2text.HTML2Text()
         self.convertor.ignore_links = True
@@ -33,4 +32,6 @@ class WechatPurifier(BasePurifier):
 
         content = self.convertor.handle(content_label_replaced)
 
-        return Document(url=doc.url, metadata={**doc.metadata}, page_content=title + content)
+        return Document(
+            url=doc.url, metadata={**doc.metadata}, page_content=title + content
+        )

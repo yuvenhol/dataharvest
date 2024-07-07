@@ -8,7 +8,6 @@ from dataharvest.schema import Document
 
 
 class ToutiaoPurifier(BasePurifier):
-
     def __init__(self):
         self.convertor = html2text.HTML2Text()
         self.convertor.ignore_links = True
@@ -25,9 +24,13 @@ class ToutiaoPurifier(BasePurifier):
         title = self.convertor.handle(title_label)
 
         # 正文
-        content_label = selector.xpath("//article[starts-with(@class, 'syl-article-base')]").get()
+        content_label = selector.xpath(
+            "//article[starts-with(@class, 'syl-article-base')]"
+        ).get()
         content_label_replaced = re.sub(r"<img\b[^>]*?>", "[图片]", content_label)
 
         content = self.convertor.handle(content_label_replaced)
 
-        return Document(url=doc.url, metadata={**doc.metadata}, page_content=title + content)
+        return Document(
+            url=doc.url, metadata={**doc.metadata}, page_content=title + content
+        )

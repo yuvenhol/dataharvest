@@ -8,7 +8,6 @@ from dataharvest.schema import Document
 
 
 class QQNewPurifier(BasePurifier):
-
     def __init__(self):
         self.convertor = html2text.HTML2Text()
         self.convertor.ignore_links = True
@@ -29,9 +28,13 @@ class QQNewPurifier(BasePurifier):
         title = self.convertor.handle(title_label)
 
         # 内容
-        content_label = selector.xpath("//div[starts-with(@class, 'article-content-wrap')]").get()
+        content_label = selector.xpath(
+            "//div[starts-with(@class, 'article-content-wrap')]"
+        ).get()
         content_label_replaced = re.sub(r"<img\b[^>]*?>", "[图片]", content_label)
 
         content = self.convertor.handle(content_label_replaced)
 
-        return Document(url=doc.url, metadata={**doc.metadata}, page_content=title + content)
+        return Document(
+            url=doc.url, metadata={**doc.metadata}, page_content=title + content
+        )

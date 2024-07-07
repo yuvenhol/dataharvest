@@ -36,7 +36,7 @@ class TavilySearcher(BaseSearcher):
         :param max_results:
         :param kwargs:
         """
-        tavily_api_key = os.getenv('TAVILY_API_KEY') or api_key
+        tavily_api_key = os.getenv("TAVILY_API_KEY") or api_key
 
         if not tavily_api_key:
             raise ValueError("Tavily API key is required.")
@@ -64,7 +64,9 @@ class TavilySearcher(BaseSearcher):
             "search_depth": kwargs.get("search_depth", self.search_depth),
             "include_answer": kwargs.get("include_answer", self.include_answer),
             "include_images": kwargs.get("include_images", self.include_images),
-            "include_raw_content": kwargs.get("include_raw_content", self.include_raw_content),
+            "include_raw_content": kwargs.get(
+                "include_raw_content", self.include_raw_content
+            ),
             "max_results": kwargs.get("max_results", self.max_results),
             "include_domains": kwargs.get("include_domains", self.include_domains),
             "exclude_domains": kwargs.get("exclude_domains", self.exclude_domains),
@@ -76,6 +78,12 @@ class TavilySearcher(BaseSearcher):
         images = res_json.get("images", [])
         answer = res_json.get("answer", "")
         items = [
-            SearchResultItem(title=item["title"], url=item["url"], score=item["score"], description=item["content"])
-            for item in res_json["results"]]
+            SearchResultItem(
+                title=item["title"],
+                url=item["url"],
+                score=item["score"],
+                description=item["content"],
+            )
+            for item in res_json["results"]
+        ]
         return SearchResult(keyword, answer, images, items)

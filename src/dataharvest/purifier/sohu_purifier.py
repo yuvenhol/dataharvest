@@ -8,7 +8,6 @@ from dataharvest.schema import Document
 
 
 class SohuPurifier(BasePurifier):
-
     def __init__(self):
         self.convertor = html2text.HTML2Text()
 

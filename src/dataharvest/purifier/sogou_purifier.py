@@ -6,7 +6,6 @@ from dataharvest.schema import Document
 
 
 class SogouBaiKePurifier(BasePurifier):
-
     def __init__(self):
         self.convertor = html2text.HTML2Text()
         self.convertor.ignore_links = True
@@ -42,7 +41,9 @@ class SogouBaiKePurifier(BasePurifier):
 
             for tr_item in cur_tr_list:
                 key = tr_item.xpath("./th/text()").get()
-                value = tr_item.xpath("./td//div[@class='base-info-card-value']/div/text()").get()
+                value = tr_item.xpath(
+                    "./td//div[@class='base-info-card-value']/div/text()"
+                ).get()
 
                 base_info_dict[key] = value
 

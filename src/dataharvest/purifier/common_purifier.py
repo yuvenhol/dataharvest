@@ -5,7 +5,7 @@ from dataharvest.schema import Document
 
 
 class CommonPurifier(BasePurifier):
-    index = 2 ** 16
+    index = 2**16
 
     def __init__(self):
         h = html2text.HTML2Text()
@@ -24,4 +24,6 @@ class CommonPurifier(BasePurifier):
 
         page_content = converter.handle(doc.page_content)
 
-        return Document(url=doc.url, metadata={**doc.metadata}, page_content=page_content)
+        return Document(
+            url=doc.url, metadata={**doc.metadata}, page_content=page_content
+        )

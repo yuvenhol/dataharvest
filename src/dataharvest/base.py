@@ -4,7 +4,6 @@ from dataharvest.spider import AutoSpider
 
 
 class DataHarvest:
-
     def __init__(self):
         self.spider = AutoSpider()
         self.purifier = AutoPurifier()

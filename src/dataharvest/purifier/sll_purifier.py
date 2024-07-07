@@ -8,7 +8,6 @@ from dataharvest.schema import Document
 
 
 class SllPurifier(BasePurifier):
-
     def __init__(self):
         self.convertor = html2text.HTML2Text()
         self.convertor.single_line_break = True

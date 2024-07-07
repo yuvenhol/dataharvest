@@ -6,7 +6,7 @@ from dataharvest.spider.spider import BaseSpider
 
 
 class CommonSpider(BaseSpider):
-    index = 2 ** 16
+    index = 2**16
 
     def match(self, url: str) -> bool:
         return True
@@ -20,7 +20,7 @@ class CommonSpider(BaseSpider):
                     """
             page.add_init_script(js)
             page.goto(url)
-            page.wait_for_load_state('load')
+            page.wait_for_load_state("load")
             html = page.content()
             document = Document(url=page.url, metadata={}, page_content=html)
             return document
@@ -34,7 +34,7 @@ class CommonSpider(BaseSpider):
                     """
             await page.add_init_script(js)
             await page.goto(url)
-            await page.wait_for_load_state('load')
+            await page.wait_for_load_state("load")
             html = await page.content()
             await browser.close()
             return Document(url=url, metadata={}, page_content=html)
