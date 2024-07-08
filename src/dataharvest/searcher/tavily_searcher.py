@@ -36,7 +36,7 @@ class TavilySearcher(BaseSearcher):
         :param max_results:
         :param kwargs:
         """
-        tavily_api_key = os.getenv("TAVILY_API_KEY") or api_key
+        tavily_api_key = api_key or os.getenv("TAVILY_API_KEY")
 
         if not tavily_api_key:
             raise ValueError("Tavily API key is required.")

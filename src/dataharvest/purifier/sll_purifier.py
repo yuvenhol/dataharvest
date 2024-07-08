@@ -13,7 +13,7 @@ class SllPurifier(BasePurifier):
         self.convertor.single_line_break = True
 
     def match(self, url: str) -> bool:
-        return "www.360doc.com/content" in url
+        return "www.360doc.com/content/" in url
 
     def purify(self, doc: Document) -> Document:
         selector = Selector(doc.page_content)

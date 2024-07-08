@@ -7,7 +7,7 @@ from dataharvest.spider.spider import BaseSpider
 
 class ToutiaoSpider(BaseSpider):
     def match(self, url: str) -> bool:
-        return "www.toutiao.com/article" in url
+        return "www.toutiao.com/article/" in url
 
     def crawl(self, url: str):
         with sync_playwright() as playwright:
