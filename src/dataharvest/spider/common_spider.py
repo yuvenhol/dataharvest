@@ -9,7 +9,7 @@ from dataharvest.spider.spider import BaseSpider
 
 
 class CommonSpider(BaseSpider):
-    _index = 2 ** 16
+    _index = 2**16
 
     def __init__(self, config: Optional[SpiderConfig] = None):
         self._config = self._merge_config(config)
@@ -20,7 +20,11 @@ class CommonSpider(BaseSpider):
     def crawl(self, url: str, config: Optional[SpiderConfig] = None) -> Document:
         config = self._merge_config(config)
         with sync_playwright() as playwright:
-            proxy = None if not config.proxy_gene_func else {"server": config.proxy_gene_func()}
+            proxy = (
+                None
+                if not config.proxy_gene_func
+                else {"server": config.proxy_gene_func()}
+            )
             browser = playwright.chromium.launch(proxy=proxy)
             page = browser.new_page()
             if config.headers:
@@ -35,10 +39,16 @@ class CommonSpider(BaseSpider):
             document = Document(url=page.url, metadata={}, page_content=html)
             return document
 
-    async def a_crawl(self, url: str, config: Optional[SpiderConfig] = None) -> Document:
+    async def a_crawl(
+        self, url: str, config: Optional[SpiderConfig] = None
+    ) -> Document:
         config = self._merge_config(config)
         async with async_playwright() as p:
-            proxy = None if not config.proxy_gene_func else {"server": config.proxy_gene_func()}
+            proxy = (
+                None
+                if not config.proxy_gene_func
+                else {"server": config.proxy_gene_func()}
+            )
             browser = await p.chromium.launch(proxy=proxy)
             page = await browser.new_page()
             if config.headers:

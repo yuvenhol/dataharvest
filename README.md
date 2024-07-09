@@ -28,7 +28,7 @@ AI时代，数据是一切的基石，DataHarvest 能够帮助获取干净有效
 | 头条       | 文章 | www.toutiao.com/article/   | ✅           | ✅  |
 | 网易       | 文章 | www.163.com/\w+/article/.+ | ✅           | ✅  |
 | 微信公众号    | 文章 | weixin.qq.com/s/           | ✅           | ✅  |
-| 马蜂窝      | 文章 | www.mafengwo.cn/i/                  | ✅ |    |
+| 马蜂窝      | 文章 | www.mafengwo.cn/i/         | ✅           |    |
 | 小红书      |    |                            | coming soon |    |
 
 其他情况使用基础playwright数据爬取和html2text数据清洗，但并未做特殊适配。
@@ -71,6 +71,46 @@ doc = auto_spider.crawl(url)
 print(doc)
 ```
 
+### 代理
+
+我们需要实现 一个代理生成类，并实现他的__call__方法。
+使用时可以在爬虫初始化时，将配置添加进去，也可以在调用时传入。
+
+```python
+from dataharvest.proxy.base import BaseProxy
+import random
+from dataharvest.spider import AutoSpider
+from dataharvest.spider.base import SpiderConfig
+
+
+class MyProxy(BaseProxy):
+    def __init__(self):
+        self.proxies = ["http://127.0.0.1:53380"]
+
+    def __call__(self) -> str:
+        return random.choice(self.proxies)
+
+
+def test_proxy_constructor():
+    proxy_gene_func = MyProxy()
+    auto_spider = AutoSpider(config=SpiderConfig(proxy_gene_func=proxy_gene_func))
+    url = "https://baike.baidu.com/item/%E6%98%8E%E5%94%90%E5%AF%85%E3%80%8A%E7%81%8C%E6%9C%A8%E4%B8%9B%E7%AF%A0%E5%9B%BE%E8%BD%B4%E3%80%8B?fromModule=lemma_search-box"
+
+    doc = auto_spider.crawl(url)
+    print(doc)
+
+
+def test_proxy_call():
+    proxy_gene_func = MyProxy()
+    auto_spider = AutoSpider()
+    config = SpiderConfig(proxy_gene_func=proxy_gene_func)
+    url = "https://baike.baidu.com/item/%E6%98%8E%E5%94%90%E5%AF%85%E3%80%8A%E7%81%8C%E6%9C%A8%E4%B8%9B%E7%AF%A0%E5%9B%BE%E8%BD%B4%E3%80%8B?fromModule=lemma_search-box"
+    doc = auto_spider.crawl(url, config=config)
+    print(doc)
+
+
+```
+
 ### 清洗
 
 ```python
@@ -90,6 +130,8 @@ print(doc)
 ![](https://yuvenhol-1255563050.cos.ap-beijing.myqcloud.com/img/202407052255246.png)
 
 ### 整合
+
+搜索+爬取+清洗
 
 ```python
 import asyncio

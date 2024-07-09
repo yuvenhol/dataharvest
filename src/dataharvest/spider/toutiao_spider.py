@@ -9,7 +9,6 @@ from dataharvest.spider.spider import BaseSpider
 
 
 class ToutiaoSpider(BaseSpider):
-
     def __init__(self, config: Optional[SpiderConfig] = None):
         self._config = config
 
@@ -30,7 +29,9 @@ class ToutiaoSpider(BaseSpider):
             document = Document(url=page.url, metadata={}, page_content=html)
             return document
 
-    async def a_crawl(self, url: str, config: Optional[SpiderConfig] = None) -> Document:
+    async def a_crawl(
+        self, url: str, config: Optional[SpiderConfig] = None
+    ) -> Document:
         async with async_playwright() as p:
             browser = await p.chromium.launch()
             page = await browser.new_page()

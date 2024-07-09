@@ -36,7 +36,7 @@ class BaiduBaikePurifier(BasePurifier):
         clean_data = f"# {title}\n\n"
         # 描述
         if desc := selector.xpath(
-                '//div[starts-with(@class, "lemmaDescText")]/text()'
+            '//div[starts-with(@class, "lemmaDescText")]/text()'
         ).get():
             clean_data += f"{desc}\n\n"
         # 简介

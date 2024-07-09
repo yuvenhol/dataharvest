@@ -40,5 +40,7 @@ class BaseSpider(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    async def a_crawl(self, url: str, config: Optional[SpiderConfig] = None) -> Document:
+    async def a_crawl(
+        self, url: str, config: Optional[SpiderConfig] = None
+    ) -> Document:
         raise NotImplementedError
