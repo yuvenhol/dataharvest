@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import Dict, List, Optional, Union as Uni
+from typing import Dict, Optional, Union as Uni
 
 from dataharvest.proxy.base import BaseProxy
 from dataharvest.schema import Document
@@ -9,7 +9,6 @@ from dataharvest.schema import Document
 @dataclass
 class SpiderConfig:
     proxy_gene_func: Optional[BaseProxy] = None
-    proxies: Uni[List[str], None] = None
     headers: Uni[Dict[str, str], None] = None
 
 
@@ -29,7 +28,6 @@ class BaseSpider(ABC):
 
         return SpiderConfig(
             proxy_gene_func=config.proxy_gene_func or self._config.proxy_gene_func,
-            proxies=config.proxies or self._config.proxies,
             headers=config.headers or self._config.headers,
         )
 
