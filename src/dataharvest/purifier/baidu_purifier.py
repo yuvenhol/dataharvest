@@ -18,7 +18,7 @@ class BaiduBaikePurifier(BasePurifier):
         self.convertor.ignore_images = True
 
     def match(self, url: str) -> bool:
-        return "baike.baidu.com/item/" in url
+        return "/baike.baidu.com/item/" in url
 
     def purify(self, doc: Document) -> Document:
         selector = Selector(doc.page_content)
@@ -36,7 +36,7 @@ class BaiduBaikePurifier(BasePurifier):
         clean_data = f"# {title}\n\n"
         # 描述
         if desc := selector.xpath(
-            '//div[starts-with(@class, "lemmaDescText")]/text()'
+                '//div[starts-with(@class, "lemmaDescText")]/text()'
         ).get():
             clean_data += f"{desc}\n\n"
         # 简介
