@@ -6,14 +6,14 @@ AI时代，数据是一切的基石，DataHarvest 能够帮助获取干净有效
 
 ![DataHarvest](https://yuvenhol-1255563050.cos.ap-beijing.myqcloud.com/img/202407022046608.png)
 
-## 搜索
+## 搜索支持
 
 | 搜索引擎   | 官网                       | 支持          |
 |--------|--------------------------|-------------|
 | tavily | https://docs.tavily.com/ | ✅           |
 | 天工     | https://www.tiangong.cn/ | coming soon |
 
-## 数据爬取&清洗
+## 数据爬取&清洗支持
 
 | 网站       | 内容 | url pattern                | 爬取          | 清洗 |
 |----------|----|----------------------------|-------------|----|
@@ -33,12 +33,18 @@ AI时代，数据是一切的基石，DataHarvest 能够帮助获取干净有效
 
 其他情况使用基础playwright数据爬取和html2text数据清洗，但并未做特殊适配。
 
-## 安装与使用
+## 安装
 
 ```shell
 pip install dataharvest
 playwright install
 ```
+
+## 使用
+
+分为搜索、爬虫、数据清洗三个主要模块，互相独立，您可以按需使用对应模块。
+
+爬取和清洗做了根据URL的自动策略匹配，您只需要使用AutoSpider和AutoPurifier即可。
 
 ## 最佳实践
 
