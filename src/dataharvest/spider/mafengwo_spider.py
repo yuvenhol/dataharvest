@@ -1,6 +1,7 @@
 import hashlib
 import json
 import re
+from typing import Optional
 
 import httpx
 from httpx import Response
@@ -9,26 +10,30 @@ from playwright.async_api import async_playwright
 from playwright.sync_api import sync_playwright
 
 from dataharvest.schema import Document
+from dataharvest.spider.base import SpiderConfig
 from dataharvest.spider.spider import BaseSpider
 
 
 class MaFengWoSpider(BaseSpider):
 
-    def __init__(self):
+    def __init__(self, config: Optional[SpiderConfig] = None):
         self.client = httpx.Client()
         self.a_client = httpx.AsyncClient()
+        self._config = self._merge_config(config)
+
+        if not self._config.headers:
+            self._config.headers = {
+                "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+            }
 
     def match(self, url: str) -> bool:
         return "www.mafengwo.cn/i/" in url
 
-    def crawl(self, url: str):
-        headers = {
-            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
-                          "Chrome/126.0.0.0 Safari/537.36",
-        }
+    def crawl(self, url: str, config: Optional[SpiderConfig] = None) -> Document:
+        config = self._merge_config(config)
 
         # 第一次请求，获取__jsluid_s，并解析__jsl_clearance_s
-        first_resp = self.client.get(url, headers=headers)
+        first_resp = self.client.get(url, headers=config.headers)
 
         jsluid_s = first_resp.cookies["__jsluid_s"]
 
@@ -37,33 +42,30 @@ class MaFengWoSpider(BaseSpider):
 
         # 反混淆、分割出cookie的部分
         with sync_playwright() as playwright:
-            browser = playwright.chromium.launch(headless=True)
+            browser = playwright.chromium.launch()
             page = browser.new_page()
             first_jsl_clearance_s = page.evaluate(first_jsl_clearance_s_raw).split(';')[0].split('=')[1]
 
         # 第二次请求，解析新的__jsl_clearance_s
         second_cookies = {"__jsluid_s": jsluid_s, "__jsl_clearance_s": first_jsl_clearance_s}
-        second_resp = self.client.get(url, headers=headers, cookies=second_cookies)
+        second_resp = self.client.get(url, headers=config.headers, cookies=second_cookies)
 
         second_jsl_clearance_s = handle_go(second_resp.text)
 
         # 第三次请求，获取真实页面内容
         third_cookies = {"__jsluid_s": jsluid_s, "__jsl_clearance_s": second_jsl_clearance_s}
-        third_resp = self.client.get(url, headers=headers, cookies=third_cookies)
+        third_resp = self.client.get(url, headers=config.headers, cookies=third_cookies)
 
         final_content = handle_final_content(third_resp)
 
         document = Document(url=url, metadata={}, page_content=final_content)
         return document
 
-    async def a_crawl(self, url: str):
-        headers = {
-            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
-                          "Chrome/126.0.0.0 Safari/537.36",
-        }
+    async def a_crawl(self, url: str, config: Optional[SpiderConfig] = None) -> Document:
+        config = self._merge_config(config)
 
         # 第一次请求，获取__jsluid_s，并解析__jsl_clearance_s
-        first_resp = await self.a_client.get(url, headers=headers)
+        first_resp = await self.a_client.get(url, headers=config.headers)
 
         jsluid_s = first_resp.cookies["__jsluid_s"]
 
@@ -72,7 +74,7 @@ class MaFengWoSpider(BaseSpider):
 
         # 反混淆、分割出cookie的部分
         async with async_playwright() as playwright:
-            browser = await playwright.chromium.launch(headless=True)
+            browser = await playwright.chromium.launch()
             page = await browser.new_page()
             first_jsl_clearance_s_js = await page.evaluate(first_jsl_clearance_s_raw)
             first_jsl_clearance_s = first_jsl_clearance_s_js.split(';')[0].split('=')[1]
@@ -80,13 +82,13 @@ class MaFengWoSpider(BaseSpider):
         # 第二次请求，解析新的__jsl_clearance_s
         second_cookies = {"__jsluid_s": jsluid_s, "__jsl_clearance_s": first_jsl_clearance_s}
 
-        second_resp = await self.a_client.get(url, headers=headers, cookies=second_cookies)
+        second_resp = await self.a_client.get(url, headers=config.headers, cookies=second_cookies)
 
         second_jsl_clearance_s = handle_go(second_resp.text)
 
         # 第三次请求，获取真实页面内容
         third_cookies = {"__jsluid_s": jsluid_s, "__jsl_clearance_s": second_jsl_clearance_s}
-        third_resp = await self.a_client.get(url, headers=headers, cookies=third_cookies)
+        third_resp = await self.a_client.get(url, headers=config.headers, cookies=third_cookies)
 
         final_content = handle_final_content(third_resp)
 

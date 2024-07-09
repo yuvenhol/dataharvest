@@ -1,13 +1,15 @@
+import copy
+
 from dataharvest.schema import Document
-from dataharvest.spider.base import BaseSpider
+from dataharvest.spider.base import BaseSpider, SpiderConfig
 
 
 class AutoSpider:
     _spiders = []
 
-    def __init__(self):
-        AutoSpider._spiders = [cls() for cls in BaseSpider.__subclasses__()]
-        AutoSpider._spiders.sort(key=lambda spider: spider.index)
+    def __init__(self, config: SpiderConfig = SpiderConfig()):
+        AutoSpider._spiders = [cls(copy.deepcopy(config)) for cls in BaseSpider.__subclasses__()]
+        AutoSpider._spiders.sort(key=lambda spider: spider._index)
 
     def _route(self, url: str) -> BaseSpider:
         for spider in self._spiders:
