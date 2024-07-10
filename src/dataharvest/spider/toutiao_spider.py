@@ -10,15 +10,20 @@ from dataharvest.spider.spider import BaseSpider
 
 class ToutiaoSpider(BaseSpider):
     def __init__(self, config: Optional[SpiderConfig] = None):
-        self._config = config
+        self._config = self._merge_config(config)
 
     def match(self, url: str) -> bool:
         return "www.toutiao.com/article/" in url
 
     def crawl(self, url: str, config: Optional[SpiderConfig] = None) -> Document:
+        config = self._merge_config(config)
         with sync_playwright() as playwright:
-            browser = playwright.chromium.launch()
+            browser = playwright.chromium.launch(**self.convert_2_playwright_lunch_arg(config))
             page = browser.new_page()
+
+            if config.headers:
+                page.set_extra_http_headers(config.headers)
+
             js = """
                     Object.defineProperties(navigator, {webdriver:{get:()=>undefined}});
                     """
@@ -32,9 +37,15 @@ class ToutiaoSpider(BaseSpider):
     async def a_crawl(
         self, url: str, config: Optional[SpiderConfig] = None
     ) -> Document:
+        config = self._merge_config(config)
+
         async with async_playwright() as p:
-            browser = await p.chromium.launch()
+            browser = await p.chromium.launch(**self.convert_2_playwright_lunch_arg(config))
             page = await browser.new_page()
+
+            if config.headers:
+                await page.set_extra_http_headers(config.headers)
+
             js = """
                     Object.defineProperties(navigator, {webdriver:{get:()=>undefined}});
                     """

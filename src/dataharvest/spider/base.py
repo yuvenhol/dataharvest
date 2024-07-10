@@ -31,6 +31,17 @@ class BaseSpider(ABC):
             headers=config.headers or self._config.headers,
         )
 
+    @staticmethod
+    def convert_2_playwright_lunch_arg(config: SpiderConfig):
+        proxy_obj = None
+        if config.proxy_gene_func:
+            proxy_obj = config.proxy_gene_func()
+
+        return {
+            "proxy": None if not proxy_obj else {"server": proxy_obj.server_url, "username": proxy_obj.username,
+                                                 "password": proxy_obj.password}
+        }
+
     @abstractmethod
     def match(self, url: str) -> bool:
         raise NotImplementedError
@@ -41,6 +52,6 @@ class BaseSpider(ABC):
 
     @abstractmethod
     async def a_crawl(
-        self, url: str, config: Optional[SpiderConfig] = None
+            self, url: str, config: Optional[SpiderConfig] = None
     ) -> Document:
         raise NotImplementedError
