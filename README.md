@@ -83,18 +83,15 @@ print(doc)
 使用时可以在爬虫初始化时，将配置添加进去，也可以在调用时传入。
 
 ```python
-from dataharvest.proxy.base import BaseProxy
-import random
+from dataharvest.proxy.base import BaseProxy, Proxy
 from dataharvest.spider import AutoSpider
 from dataharvest.spider.base import SpiderConfig
 
 
 class MyProxy(BaseProxy):
-    def __init__(self):
-        self.proxies = ["http://127.0.0.1:53380"]
 
-    def __call__(self) -> str:
-        return random.choice(self.proxies)
+    def __call__(self) -> Proxy:
+        return Proxy(protocol="http", host="127.0.0.1", port="53380", username="username", password="password")
 
 
 def test_proxy_constructor():
