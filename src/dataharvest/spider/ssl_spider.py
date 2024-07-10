@@ -15,7 +15,7 @@ class CommonSpider(BaseSpider):
         self._config = self._merge_config(config)
 
     def match(self, url: str) -> bool:
-        return True
+        return "www.360doc.com/content/" in url
 
     def crawl(self, url: str, config: Optional[SpiderConfig] = None) -> Document:
         config = self._merge_config(config)
@@ -29,7 +29,7 @@ class CommonSpider(BaseSpider):
                     """
             page.add_init_script(js)
             page.goto(url)
-            page.wait_for_load_state(state="load")
+            page.wait_for_selector("#artContent")
             html = page.content()
             document = Document(url=page.url, metadata={}, page_content=html)
             return document
@@ -48,7 +48,7 @@ class CommonSpider(BaseSpider):
                     """
             await page.add_init_script(js)
             await page.goto(url)
-            await page.wait_for_load_state("load")
+            await page.wait_for_selector("#artContent")
             html = await page.content()
             await browser.close()
             return Document(url=url, metadata={}, page_content=html)

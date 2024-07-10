@@ -33,14 +33,29 @@ class BaseSpider(ABC):
 
     @staticmethod
     def convert_2_playwright_lunch_arg(config: SpiderConfig):
-        proxy_obj = None
+        proxy_dict = None
+        if config.proxy_gene_func:
+            proxy_obj = config.proxy_gene_func()
+            if proxy_obj:
+                proxy_dict = {"server": f"{proxy_obj.protocol}://{proxy_obj.host}:{proxy_obj.port}",
+                              "username": proxy_obj.username,
+                                "password": proxy_obj.password}
+        return {"proxy": proxy_dict}
+
+    @staticmethod
+    def convert_2_httpx_client_arg(config: SpiderConfig):
+        proxy = None
         if config.proxy_gene_func:
             proxy_obj = config.proxy_gene_func()
 
-        return {
-            "proxy": None if not proxy_obj else {"server": proxy_obj.server_url, "username": proxy_obj.username,
-                                                 "password": proxy_obj.password}
-        }
+            if proxy_obj:
+
+                if proxy_obj.username and proxy_obj.password:
+                    proxy = f"{proxy_obj.protocol}://{proxy_obj.username}:{proxy_obj.password}@{proxy_obj.host}:{proxy_obj.port}"
+                else:
+                    proxy = f"{proxy_obj.protocol}://{proxy_obj.host}:{proxy_obj.port}"
+
+        return {"proxy": proxy or None, "headers": config.headers or None}
 
     @abstractmethod
     def match(self, url: str) -> bool:

@@ -16,8 +16,8 @@ from dataharvest.spider.spider import BaseSpider
 
 class MaFengWoSpider(BaseSpider):
     def __init__(self, config: Optional[SpiderConfig] = None):
-        self.client = httpx.Client()
-        self.a_client = httpx.AsyncClient()
+        self.client = httpx.Client(**BaseSpider.convert_2_httpx_client_arg(config))
+        self.a_client = httpx.AsyncClient(**BaseSpider.convert_2_httpx_client_arg(config))
         self._config = self._merge_config(config)
 
         if not self._config.headers:

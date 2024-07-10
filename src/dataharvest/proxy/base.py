@@ -5,7 +5,9 @@ from typing import Optional
 
 @dataclass
 class Proxy:
-    server_url: str
+    protocol: str
+    host: str
+    port: str
     username: Optional[str] = None
     password: Optional[str] = None
 
