@@ -34,9 +34,6 @@ class XiaoHongShuSpider(BaseSpider):
 
             context_page = browser_context.new_page()
 
-            context_page.goto('https://httpbin.org/get')
-            print(context_page.content())
-
             context_page.goto(url)
             context_page.wait_for_load_state(state="load")
             html = context_page.content()

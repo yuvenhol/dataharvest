@@ -23,9 +23,7 @@ class XiaoHongShuPurifier(BasePurifier):
 
         # 文字
         desc_label = selector.xpath("//div[@id='detail-desc']").get()
-        print(desc_label)
         desc = self.convertor.handle(desc_label)
-        print(desc)
 
         # 图片
         img_label = selector.xpath("//div[@class='swiper-wrapper']")
