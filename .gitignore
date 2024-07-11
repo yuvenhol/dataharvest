@@ -16,3 +16,5 @@ wheels/
 .python-version
 
 .pytest_cache
+
+tests/test_secret.py

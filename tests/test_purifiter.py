@@ -112,3 +112,14 @@ def test_auto_purifier_wechat():
     auto_purifier = AutoPurifier()
     doc = auto_purifier.purify(doc)
     print(doc)
+
+def test_auto_purifier_xiaohongshu():
+    url = "https://www.xiaohongshu.com/explore/64ca1b73000000000b028dd2"
+    auto_spider = AutoSpider()
+    doc = auto_spider.crawl(url)
+    auto_purifier = AutoPurifier()
+    doc = auto_purifier.purify(doc)
+    print(doc)
+
+    with open("xiaohongshu.md", "w", encoding="utf-8") as f:
+        f.write(doc.page_content)

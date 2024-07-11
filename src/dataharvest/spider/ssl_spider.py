@@ -8,8 +8,7 @@ from dataharvest.spider.base import SpiderConfig
 from dataharvest.spider.spider import BaseSpider
 
 
-class CommonSpider(BaseSpider):
-    _index = 2 ** 16
+class SslSpider(BaseSpider):
 
     def __init__(self, config: Optional[SpiderConfig] = None):
         self._config = self._merge_config(config)

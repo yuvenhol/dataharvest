@@ -11,6 +11,7 @@ from dataharvest.purifier.sohu_purifier import SohuPurifier
 from dataharvest.purifier.toutiao_purifier import ToutiaoPurifier
 from dataharvest.purifier.wangyi_purifier import WangYiPurifier
 from dataharvest.purifier.wechat_purifier import WechatPurifier
+from dataharvest.purifier.xiaohongshu_purifier import XiaoHongShuPurifier
 
 __all__ = [
     "BasePurifier",
@@ -27,4 +28,5 @@ __all__ = [
     "SoBaikePurifier",
     "ToutiaoPurifier",
     "WechatPurifier",
+    "XiaoHongShuPurifier"
 ]
