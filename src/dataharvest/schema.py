@@ -14,7 +14,7 @@ class Document:
 class SearchResultItem:
     title: str
     url: str
-    score: Optional[float] = None
+    score: Optional[float] = 0.0
     description: str = ""
     content: str = ""
 

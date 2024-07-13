@@ -2,7 +2,7 @@
 
 DataHarvest 是一个用于数据搜索🔍、爬取🕷、清洗🧽的工具。
 
-AI时代，数据是一切的基石，DataHarvest 能够帮助获取干净有效的数据。
+AI时代，数据是一切的基石，DataHarvest 能够帮助快速获取干净有效的数据，开箱即用，灵活配置。
 
 ![DataHarvest](https://yuvenhol-1255563050.cos.ap-beijing.myqcloud.com/img/202407022046608.png)
 
@@ -48,6 +48,24 @@ playwright install
 
 ## 最佳实践
 
+### 整合
+
+搜索+自动爬取+自动清洗
+
+```python
+import asyncio
+
+from dataharvest.base import DataHarvest
+from dataharvest.searcher import TavilySearcher
+
+searcher = TavilySearcher()
+dh = DataHarvest()
+r = searcher.search("战国水晶杯")
+tasks = [dh.a_crawl_and_purify(item.url) for item in r.items]
+loop = asyncio.get_event_loop()
+docs = loop.run_until_complete(asyncio.gather(*tasks))
+```
+
 ### 搜索
 
 ```python
@@ -66,7 +84,7 @@ SearchResult(keyword='战国水晶杯', answer=None, images=None, items=[
                      content='')])
 ```
 
-### 爬虫
+### 爬取
 
 ```python
 from dataharvest.spider import AutoSpider
@@ -79,8 +97,10 @@ print(doc)
 
 ### 代理
 
+很多情况下我们需要配置代理，比如小红书和马蜂窝。
 我们需要实现 一个代理生成类，并实现他的__call__方法。
-使用时可以在爬虫初始化时，将配置添加进去，也可以在调用时传入。
+
+可以在爬虫初始化时，将配置添加进去，也可以在调用时传入。
 
 ```python
 from dataharvest.proxy.base import BaseProxy, Proxy
@@ -131,24 +151,6 @@ print(doc)
 
 效果：
 ![](https://yuvenhol-1255563050.cos.ap-beijing.myqcloud.com/img/202407052255246.png)
-
-### 整合
-
-搜索+爬取+清洗
-
-```python
-import asyncio
-
-from dataharvest.base import DataHarvest
-from dataharvest.searcher import TavilySearcher
-
-searcher = TavilySearcher()
-dh = DataHarvest()
-r = searcher.search("战国水晶杯")
-tasks = [dh.a_crawl_and_purify(item.url) for item in r.items]
-loop = asyncio.get_event_loop()
-docs = loop.run_until_complete(asyncio.gather(*tasks))
-```
 
 ## 鸣谢
 
