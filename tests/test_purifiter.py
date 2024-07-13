@@ -2,15 +2,6 @@ from dataharvest.purifier import AutoPurifier
 from dataharvest.spider import AutoSpider
 
 
-def test_auto_purifier():
-    url = "https://zhuanlan.zhihu.com/p/369984873"
-    auto_spider = AutoSpider()
-    doc = auto_spider.crawl(url)
-    auto_purifier = AutoPurifier()
-    doc = auto_purifier.purify(doc)
-    print(doc)
-
-
 def test_auto_purifier_sohu():
     url = "https://www.sohu.com/a/325718406_120013344"
     auto_spider = AutoSpider()
@@ -57,15 +48,6 @@ def test_auto_purifier_sogoubaike():
     print(doc)
 
 
-def test_auto_purifier_zhihu():
-    url = "https://zhuanlan.zhihu.com/p/706922799"
-    auto_spider = AutoSpider()
-    doc = auto_spider.crawl(url)
-    auto_purifier = AutoPurifier()
-    doc = auto_purifier.purify(doc)
-    print(doc)
-
-
 def test_auto_purifier_bilibili():
     url = "https://www.bilibili.com/read/cv35655718/?from=category_0&jump_opus=1"
     auto_spider = AutoSpider()
@@ -91,8 +73,6 @@ def test_auto_purifier_sobaike():
     print(doc)
     auto_purifier = AutoPurifier()
     doc = auto_purifier.purify(doc)
-    with open("sobaike.md", "w", encoding="utf-8") as f:
-        f.write(doc.page_content)
     print(doc)
 
 
@@ -113,6 +93,7 @@ def test_auto_purifier_wechat():
     doc = auto_purifier.purify(doc)
     print(doc)
 
+
 def test_auto_purifier_xiaohongshu():
     url = "https://www.xiaohongshu.com/explore/64ca1b73000000000b028dd2"
     auto_spider = AutoSpider()
@@ -120,6 +101,3 @@ def test_auto_purifier_xiaohongshu():
     auto_purifier = AutoPurifier()
     doc = auto_purifier.purify(doc)
     print(doc)
-
-    with open("xiaohongshu.md", "w", encoding="utf-8") as f:
-        f.write(doc.page_content)
