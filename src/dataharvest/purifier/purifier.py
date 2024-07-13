@@ -9,6 +9,11 @@ class AutoPurifier:
         AutoPurifier._purifiers = [cls() for cls in BasePurifier.__subclasses__()]
         AutoPurifier._purifiers.sort(key=lambda purifier: purifier.index)
 
+    @classmethod
+    def register(cls, purifier: BasePurifier):
+        AutoPurifier._purifiers.append(purifier)
+        AutoPurifier._purifiers.sort(key=lambda purifier: purifier.index)
+
     def _route(self, url: str) -> BasePurifier:
         for purifier in self._purifiers:
             if purifier.match(url):

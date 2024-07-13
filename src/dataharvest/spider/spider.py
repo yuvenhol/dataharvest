@@ -14,6 +14,11 @@ class AutoSpider:
         ]
         AutoSpider._spiders.sort(key=lambda spider: spider._index)
 
+    @classmethod
+    def register(cls, spider: BaseSpider):
+        AutoSpider._spiders.append(spider)
+        AutoSpider._spiders.sort(key=lambda spider: spider._index)
+
     def _route(self, url: str) -> BaseSpider:
         for spider in self._spiders:
             if spider.match(url=url):
