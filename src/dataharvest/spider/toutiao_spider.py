@@ -2,6 +2,7 @@ from typing import Optional
 
 from playwright.async_api import async_playwright
 from playwright.sync_api import sync_playwright
+from playwright_stealth import stealth_async, stealth_sync
 
 from dataharvest.schema import Document
 from dataharvest.spider.base import SpiderConfig
@@ -18,16 +19,14 @@ class ToutiaoSpider(BaseSpider):
     def crawl(self, url: str, config: Optional[SpiderConfig] = None) -> Document:
         config = self._merge_config(config)
         with sync_playwright() as playwright:
-            browser = playwright.chromium.launch(**self.convert_2_playwright_lunch_arg(config))
+            browser = playwright.chromium.launch(
+                **self.convert_2_playwright_lunch_arg(config))
             page = browser.new_page()
 
             if config.headers:
                 page.set_extra_http_headers(config.headers)
 
-            js = """
-                    Object.defineProperties(navigator, {webdriver:{get:()=>undefined}});
-                    """
-            page.add_init_script(js)
+            stealth_sync(page)
             page.goto(url)
             page.wait_for_load_state("networkidle", timeout=10000)
             html = page.content()
@@ -35,21 +34,19 @@ class ToutiaoSpider(BaseSpider):
             return document
 
     async def a_crawl(
-        self, url: str, config: Optional[SpiderConfig] = None
+            self, url: str, config: Optional[SpiderConfig] = None
     ) -> Document:
         config = self._merge_config(config)
 
         async with async_playwright() as p:
-            browser = await p.chromium.launch(**self.convert_2_playwright_lunch_arg(config))
+            browser = await p.chromium.launch(
+                **self.convert_2_playwright_lunch_arg(config))
             page = await browser.new_page()
 
             if config.headers:
                 await page.set_extra_http_headers(config.headers)
 
-            js = """
-                    Object.defineProperties(navigator, {webdriver:{get:()=>undefined}});
-                    """
-            await page.add_init_script(js)
+            await stealth_async(page)
             await page.goto(url)
             await page.wait_for_load_state("networkidle", timeout=10000)
             html = await page.content()

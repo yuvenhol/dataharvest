@@ -1,7 +1,6 @@
 from typing import Optional
 
-from playwright.async_api import async_playwright
-from playwright.sync_api import sync_playwright
+import httpx
 
 from dataharvest.schema import Document
 from dataharvest.spider.base import SpiderConfig
@@ -11,43 +10,31 @@ from dataharvest.spider.spider import BaseSpider
 class SslSpider(BaseSpider):
 
     def __init__(self, config: Optional[SpiderConfig] = None):
+        self.client = httpx.Client(**BaseSpider.convert_2_httpx_client_arg(config))
+        self.a_client = httpx.AsyncClient(
+            **BaseSpider.convert_2_httpx_client_arg(config))
         self._config = self._merge_config(config)
 
+        if not self._config.headers:
+            self._config.headers = {
+                "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+            }
+
     def match(self, url: str) -> bool:
-        return "www.360doc.com/content/" in url
+        return "/www.360doc.com/content/" in url
 
     def crawl(self, url: str, config: Optional[SpiderConfig] = None) -> Document:
-        config = self._merge_config(config)
-        with sync_playwright() as playwright:
-            browser = playwright.chromium.launch(**self.convert_2_playwright_lunch_arg(config))
-            page = browser.new_page()
-            if config.headers:
-                page.set_extra_http_headers(config.headers)
-            js = """
-                    Object.defineProperties(navigator, {webdriver:{get:()=>undefined}});
-                    """
-            page.add_init_script(js)
-            page.goto(url)
-            page.wait_for_selector("#artContent")
-            html = page.content()
-            document = Document(url=page.url, metadata={}, page_content=html)
-            return document
+        res = self.client.get(url, headers=self._config.headers)
+        res.raise_for_status()
+        document = Document(url=str(res.request.url), metadata={},
+                            page_content=res.content.decode("utf-8"))
+        return document
 
     async def a_crawl(
             self, url: str, config: Optional[SpiderConfig] = None
     ) -> Document:
-        config = self._merge_config(config)
-        async with async_playwright() as p:
-            browser = await p.chromium.launch(**self.convert_2_playwright_lunch_arg(config))
-            page = await browser.new_page()
-            if config.headers:
-                await page.set_extra_http_headers(config.headers)
-            js = """
-                    Object.defineProperties(navigator, {webdriver:{get:()=>undefined}});
-                    """
-            await page.add_init_script(js)
-            await page.goto(url)
-            await page.wait_for_selector("#artContent")
-            html = await page.content()
-            await browser.close()
-            return Document(url=url, metadata={}, page_content=html)
+        res = await self.a_client.get(url, headers=self._config.headers)
+        res.raise_for_status()
+        document = Document(url=str(res.request.url), metadata={},
+                            page_content=res.content.decode("utf-8"))
+        return document
