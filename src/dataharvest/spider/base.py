@@ -14,9 +14,9 @@ class SpiderConfig:
 
 class BaseSpider(ABC):
     _index = 0
-    _config: SpiderConfig = None
+    _config: Optional[SpiderConfig] = None
 
-    def _merge_config(self, config: SpiderConfig) -> SpiderConfig:
+    def _merge_config(self, config: Optional[SpiderConfig]) -> Optional[SpiderConfig]:
         if self._config is None and config is None:
             return SpiderConfig()
 
@@ -37,19 +37,22 @@ class BaseSpider(ABC):
         if config.proxy_gene_func:
             proxy_obj = config.proxy_gene_func()
             if proxy_obj:
-                proxy_dict = {"server": f"{proxy_obj.protocol}://{proxy_obj.host}:{proxy_obj.port}",
-                              "username": proxy_obj.username,
-                                "password": proxy_obj.password}
+                proxy_dict = {
+                    "server": f"{proxy_obj.protocol}://{proxy_obj.host}:{proxy_obj.port}",
+                    "username": proxy_obj.username,
+                    "password": proxy_obj.password,
+                }
         return {"proxy": proxy_dict}
 
     @staticmethod
-    def convert_2_httpx_client_arg(config: SpiderConfig):
+    def convert_2_httpx_client_arg(config: Optional[SpiderConfig]):
+        if config is None:
+            return {}
         proxy = None
         if config.proxy_gene_func:
             proxy_obj = config.proxy_gene_func()
 
             if proxy_obj:
-
                 if proxy_obj.username and proxy_obj.password:
                     proxy = f"{proxy_obj.protocol}://{proxy_obj.username}:{proxy_obj.password}@{proxy_obj.host}:{proxy_obj.port}"
                 else:
@@ -67,6 +70,6 @@ class BaseSpider(ABC):
 
     @abstractmethod
     async def a_crawl(
-            self, url: str, config: Optional[SpiderConfig] = None
+        self, url: str, config: Optional[SpiderConfig] = None
     ) -> Document:
         raise NotImplementedError

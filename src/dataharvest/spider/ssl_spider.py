@@ -8,11 +8,11 @@ from dataharvest.spider.spider import BaseSpider
 
 
 class SslSpider(BaseSpider):
-
     def __init__(self, config: Optional[SpiderConfig] = None):
         self.client = httpx.Client(**BaseSpider.convert_2_httpx_client_arg(config))
         self.a_client = httpx.AsyncClient(
-            **BaseSpider.convert_2_httpx_client_arg(config))
+            **BaseSpider.convert_2_httpx_client_arg(config)
+        )
         self._config = self._merge_config(config)
 
         if not self._config.headers:
@@ -24,17 +24,25 @@ class SslSpider(BaseSpider):
         return "/www.360doc.com/content/" in url
 
     def crawl(self, url: str, config: Optional[SpiderConfig] = None) -> Document:
-        res = self.client.get(url, headers=self._config.headers)
+        res = self.client.get(url, headers=self._config.headers, follow_redirects=True)
         res.raise_for_status()
-        document = Document(url=str(res.request.url), metadata={},
-                            page_content=res.content.decode("utf-8"))
+        document = Document(
+            url=str(res.request.url),
+            metadata={},
+            page_content=res.content.decode("utf-8"),
+        )
         return document
 
     async def a_crawl(
-            self, url: str, config: Optional[SpiderConfig] = None
+        self, url: str, config: Optional[SpiderConfig] = None
     ) -> Document:
-        res = await self.a_client.get(url, headers=self._config.headers)
+        res = await self.a_client.get(
+            url, headers=self._config.headers, follow_redirects=True
+        )
         res.raise_for_status()
-        document = Document(url=str(res.request.url), metadata={},
-                            page_content=res.content.decode("utf-8"))
+        document = Document(
+            url=str(res.request.url),
+            metadata={},
+            page_content=res.content.decode("utf-8"),
+        )
         return document
