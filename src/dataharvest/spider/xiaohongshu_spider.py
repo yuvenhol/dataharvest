@@ -12,7 +12,7 @@ from dataharvest.spider.utils import random_user_agent
 class XiaoHongShuSpider(BaseSpider):
 
     def __init__(self, config: Optional[SpiderConfig] = None):
-        self._config = self._merge_config(config)
+        super().__init__(config)
         self._cookies = [{
             'name': "webId",
             'value': "xxx123",
@@ -21,13 +21,14 @@ class XiaoHongShuSpider(BaseSpider):
         }]
 
     def match(self, url: str) -> bool:
-        return "/www.xiaohongshu.com/explore/" in url or "/xhslink.com/" in url
+        return "/xhslink.com/" in url
 
     def crawl(self, url: str, config: Optional[SpiderConfig] = None) -> Document:
         config = self._merge_config(config)
         with sync_playwright() as playwright:
-            browser = playwright.chromium.launch(
-                **self.convert_2_playwright_lunch_arg(config))
+            browser = playwright.chromium.launch(headless=False,
+                                                 **self.convert_2_playwright_lunch_arg(
+                                                     config))
             browser_context = browser.new_context(
                 user_agent=random_user_agent()
             )
@@ -40,7 +41,7 @@ class XiaoHongShuSpider(BaseSpider):
             context_page.goto(url)
             context_page.wait_for_load_state(state="load")
             html = context_page.content()
-            document = Document(url=url, metadata={}, page_content=html)
+            document = Document(url=context_page.url, metadata={}, page_content=html)
             return document
 
     async def a_crawl(
@@ -61,5 +62,5 @@ class XiaoHongShuSpider(BaseSpider):
             await context_page.goto(url)
             await context_page.wait_for_load_state(state="load")
             html = await context_page.content()
-            document = Document(url=url, metadata={}, page_content=html)
+            document = Document(url=context_page.url, metadata={}, page_content=html)
             return document

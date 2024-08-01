@@ -14,7 +14,7 @@ class ToutiaoPurifier(BasePurifier):
         self.convertor.body_width = 0
 
     def match(self, url: str) -> bool:
-        return "www.toutiao.com/article/" in url
+        return "/www.toutiao.com/article/" in url
 
     def purify(self, doc: Document) -> Document:
         selector = Selector(doc.page_content)

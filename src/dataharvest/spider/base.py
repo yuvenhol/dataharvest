@@ -13,8 +13,11 @@ class SpiderConfig:
 
 
 class BaseSpider(ABC):
-    _index = 0
+    index = 0
     _config: Optional[SpiderConfig] = None
+
+    def __init__(self, config: Optional[SpiderConfig] = None):
+        self._config = self._merge_config(config)
 
     def _merge_config(self, config: Optional[SpiderConfig]) -> Optional[SpiderConfig]:
         if self._config is None and config is None:
@@ -70,6 +73,6 @@ class BaseSpider(ABC):
 
     @abstractmethod
     async def a_crawl(
-        self, url: str, config: Optional[SpiderConfig] = None
+            self, url: str, config: Optional[SpiderConfig] = None
     ) -> Document:
         raise NotImplementedError

@@ -13,7 +13,7 @@ class SoBaikePurifier(BasePurifier):
         self.convertor.body_width = 0
 
     def match(self, url: str) -> bool:
-        return "baike.so.com/doc/" in url
+        return "/baike.so.com/doc/" in url
 
     def purify(self, doc: Document) -> Document:
         selector = Selector(doc.page_content)

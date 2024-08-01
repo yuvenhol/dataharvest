@@ -14,7 +14,7 @@ class WechatPurifier(BasePurifier):
         self.convertor.body_width = 0
 
     def match(self, url: str) -> bool:
-        return "weixin.qq.com/s/" in url
+        return "/weixin.qq.com/s/" in url
 
     def purify(self, doc: Document) -> Document:
         selector = Selector(doc.page_content)

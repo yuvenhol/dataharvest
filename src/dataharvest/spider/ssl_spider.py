@@ -9,6 +9,7 @@ from dataharvest.spider.spider import BaseSpider
 
 class SslSpider(BaseSpider):
     def __init__(self, config: Optional[SpiderConfig] = None):
+        super().__init__(config)
         self.client = httpx.Client(**BaseSpider.convert_2_httpx_client_arg(config))
         self.a_client = httpx.AsyncClient(
             **BaseSpider.convert_2_httpx_client_arg(config)
@@ -34,7 +35,7 @@ class SslSpider(BaseSpider):
         return document
 
     async def a_crawl(
-        self, url: str, config: Optional[SpiderConfig] = None
+            self, url: str, config: Optional[SpiderConfig] = None
     ) -> Document:
         res = await self.a_client.get(
             url, headers=self._config.headers, follow_redirects=True

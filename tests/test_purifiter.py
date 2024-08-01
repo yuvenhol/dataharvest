@@ -77,7 +77,7 @@ def test_auto_purifier_sobaike():
 
 
 def test_auto_purifier_toutiao():
-    url = "https://www.toutiao.com/article/7386866265849168419/?log_from=e75b95143ac23_1720001882524"
+    url = "https://www.toutiao.com/article/7359215340544344614/"
     auto_spider = AutoSpider()
     doc = auto_spider.crawl(url)
     auto_purifier = AutoPurifier()
@@ -95,7 +95,7 @@ def test_auto_purifier_wechat():
 
 
 def test_auto_purifier_xiaohongshu():
-    url = "https://www.xiaohongshu.com/explore/64ca1b73000000000b028dd2"
+    url = "http://xhslink.com/wgaRGR"
     auto_spider = AutoSpider()
     doc = auto_spider.crawl(url)
     auto_purifier = AutoPurifier()

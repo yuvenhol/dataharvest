@@ -36,7 +36,7 @@ class BaiduBaikePurifier(BasePurifier):
         clean_data = f"# {title}\n\n"
         # 描述
         if desc := selector.xpath(
-            '//div[starts-with(@class, "lemmaDescText")]/text()'
+                '//div[starts-with(@class, "lemmaDescText")]/text()'
         ).get():
             clean_data += f"{desc}\n\n"
         # 简介
@@ -70,7 +70,7 @@ class BaiJiaHaoPurifier(BasePurifier):
         self.convertor.body_width = 0
 
     def match(self, url: str) -> bool:
-        return "baijiahao.baidu.com/s" in url
+        return "/baijiahao.baidu.com/s" in url
 
     def purify(self, doc: Document) -> Document:
         selector = Selector(doc.page_content)

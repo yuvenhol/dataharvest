@@ -12,7 +12,7 @@ class SohuPurifier(BasePurifier):
         self.convertor = html2text.HTML2Text()
 
     def match(self, url: str) -> bool:
-        return "www.sohu.com/a/" in url
+        return "/www.sohu.com/a/" in url
 
     def purify(self, doc: Document) -> Document:
         selector = Selector(doc.page_content)

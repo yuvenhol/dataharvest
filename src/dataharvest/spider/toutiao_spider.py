@@ -11,10 +11,10 @@ from dataharvest.spider.spider import BaseSpider
 
 class ToutiaoSpider(BaseSpider):
     def __init__(self, config: Optional[SpiderConfig] = None):
-        self._config = self._merge_config(config)
+        super().__init__(config)
 
     def match(self, url: str) -> bool:
-        return "www.toutiao.com/article/" in url
+        return "/www.toutiao.com/article/" in url
 
     def crawl(self, url: str, config: Optional[SpiderConfig] = None) -> Document:
         config = self._merge_config(config)

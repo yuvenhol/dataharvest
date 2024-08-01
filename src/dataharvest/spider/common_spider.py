@@ -10,10 +10,10 @@ from dataharvest.spider.spider import BaseSpider
 
 
 class CommonSpider(BaseSpider):
-    _index = 2 ** 16
+    index = 2 ** 16
 
     def __init__(self, config: Optional[SpiderConfig] = None):
-        self._config = self._merge_config(config)
+        super().__init__(config)
 
     def match(self, url: str) -> bool:
         return True

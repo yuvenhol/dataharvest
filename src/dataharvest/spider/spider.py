@@ -1,23 +1,23 @@
 import copy
-from typing import Optional
+from typing import List, Optional
 
 from dataharvest.schema import Document
 from dataharvest.spider.base import BaseSpider, SpiderConfig
 
 
 class AutoSpider:
-    _spiders = []
+    _spiders: List[BaseSpider] = []
 
     def __init__(self, config: SpiderConfig = SpiderConfig()):
         AutoSpider._spiders = [
             cls(copy.deepcopy(config)) for cls in BaseSpider.__subclasses__()
         ]
-        AutoSpider._spiders.sort(key=lambda spider: spider._index)
+        AutoSpider._spiders.sort(key=lambda spider: spider.index)
 
     @classmethod
     def register(cls, spider: BaseSpider):
         AutoSpider._spiders.append(spider)
-        AutoSpider._spiders.sort(key=lambda spider: spider._index)
+        AutoSpider._spiders.sort(key=lambda spider: spider.index)
 
     def _route(self, url: str) -> BaseSpider:
         for spider in self._spiders:
@@ -29,6 +29,7 @@ class AutoSpider:
         spider = self._route(url)
         return spider.crawl(url, config)
 
-    async def a_crawl(self, url: str, config: Optional[SpiderConfig] = None) -> Document:
+    async def a_crawl(self, url: str,
+                      config: Optional[SpiderConfig] = None) -> Document:
         spider = self._route(url)
         return await spider.a_crawl(url, config)

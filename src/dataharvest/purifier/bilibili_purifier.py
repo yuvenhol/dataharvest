@@ -14,7 +14,7 @@ class BilibiliPurifier(BasePurifier):
         self.convertor.body_width = 0
 
     def match(self, url: str) -> bool:
-        return "www.bilibili.com/read/" in url
+        return "/www.bilibili.com/read/" in url
 
     def purify(self, doc: Document) -> Document:
         selector = Selector(doc.page_content)

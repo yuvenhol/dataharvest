@@ -16,8 +16,10 @@ from dataharvest.spider.spider import BaseSpider
 
 class MaFengWoSpider(BaseSpider):
     def __init__(self, config: Optional[SpiderConfig] = None):
+        super().__init__(config)
         self.client = httpx.Client(**BaseSpider.convert_2_httpx_client_arg(config))
-        self.a_client = httpx.AsyncClient(**BaseSpider.convert_2_httpx_client_arg(config))
+        self.a_client = httpx.AsyncClient(
+            **BaseSpider.convert_2_httpx_client_arg(config))
         self._config = self._merge_config(config)
 
         if not self._config.headers:
@@ -26,7 +28,7 @@ class MaFengWoSpider(BaseSpider):
             }
 
     def match(self, url: str) -> bool:
-        return "www.mafengwo.cn/i/" in url
+        return "/www.mafengwo.cn/i/" in url
 
     def crawl(self, url: str, config: Optional[SpiderConfig] = None) -> Document:
         config = self._merge_config(config)
@@ -73,7 +75,7 @@ class MaFengWoSpider(BaseSpider):
         return document
 
     async def a_crawl(
-        self, url: str, config: Optional[SpiderConfig] = None
+            self, url: str, config: Optional[SpiderConfig] = None
     ) -> Document:
         config = self._merge_config(config)
 
@@ -162,7 +164,7 @@ def handle_final_content(third_resp: Response) -> str:
     final_content = selector.xpath('//div[@class="_j_content"]').get()
 
     final_content = (
-        final_content or selector.xpath('//div[@class="_j_content_box"]').get()
+            final_content or selector.xpath('//div[@class="_j_content_box"]').get()
     )
     final_content = final_content or selector.xpath('//div[@class="post_info"]').get()
 
