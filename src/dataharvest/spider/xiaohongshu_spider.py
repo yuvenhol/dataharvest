@@ -26,9 +26,8 @@ class XiaoHongShuSpider(BaseSpider):
     def crawl(self, url: str, config: Optional[SpiderConfig] = None) -> Document:
         config = self._merge_config(config)
         with sync_playwright() as playwright:
-            browser = playwright.chromium.launch(headless=False,
-                                                 **self.convert_2_playwright_lunch_arg(
-                                                     config))
+            browser = playwright.chromium.launch(
+                **self.convert_2_playwright_lunch_arg(config))
             browser_context = browser.new_context(
                 user_agent=random_user_agent()
             )
