@@ -12,7 +12,7 @@ class AutoPurifier:
     @classmethod
     def register(cls, purifier: BasePurifier):
         AutoPurifier._purifiers.append(purifier)
-        AutoPurifier._purifiers.sort(key=lambda purifier: purifier.index)
+        AutoPurifier._purifiers.sort(key=lambda p: p.index)
 
     def _route(self, url: str) -> BasePurifier:
         for purifier in self._purifiers:

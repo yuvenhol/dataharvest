@@ -17,7 +17,7 @@ class AutoSpider:
     @classmethod
     def register(cls, spider: BaseSpider):
         AutoSpider._spiders.append(spider)
-        AutoSpider._spiders.sort(key=lambda spider: spider.index)
+        AutoSpider._spiders.sort(key=lambda s: s.index)
 
     def _route(self, url: str) -> BaseSpider:
         for spider in self._spiders:
