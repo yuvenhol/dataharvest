@@ -86,7 +86,7 @@ def test_auto_purifier_toutiao():
 
 
 def test_auto_purifier_wechat():
-    url = "https://mp.weixin.qq.com/s/g7WfEc5UxAi3aMyDmwQnow"
+    url = "https://mp.weixin.qq.com/s?__biz=MzA4Njc0OTc3Mw==&mid=2650879951&idx=1&sn=4370b54d5b06b34aeb063056f1a663d9&chksm=843670edb341f9fbfd64d6ac1c9f2a53160c4f6e8a3bdaaf15167003f95c07667bf1fcc4a0b0&token=139110043&lang=zh_CN#rd"
     auto_spider = AutoSpider()
     doc = auto_spider.crawl(url)
     auto_purifier = AutoPurifier()
