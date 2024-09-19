@@ -20,13 +20,6 @@ def test_auto_spider():
     print(doc)
 
 
-def test_mafengwo_spider():
-    spider = AutoSpider()
-    doc = spider.crawl("https://www.mafengwo.cn/i/2987983.html")
-    print(doc)
-    print(doc.page_content)
-
-
 @pytest.mark.asyncio
 async def test_async_common_spider():
     spider = AutoSpider()
