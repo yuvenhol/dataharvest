@@ -1,7 +1,8 @@
 import pytest
 
 from dataharvest.spider.common_spider import CommonSpider
-from dataharvest.spider.spider import AutoSpider
+from dataharvest.spider import AutoSpider
+from dataharvest.spider import XiaoHongShuSpider
 
 
 def test_common_spider():
@@ -28,3 +29,11 @@ async def test_async_common_spider():
     )
     print(doc)
     print(doc.page_content)
+
+
+def test_xhs_spider():
+    spider = XiaoHongShuSpider()
+    doc = spider.crawl(
+        "https://www.xiaohongshu.com/discovery/item/645da5ac0000000013031f93"
+    )
+    print(doc)
