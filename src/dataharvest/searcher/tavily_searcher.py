@@ -86,4 +86,4 @@ class TavilySearcher(BaseSearcher):
             )
             for item in res_json["results"]
         ]
-        return SearchResult(keyword, answer, images, items)
+        return SearchResult(keyword, answer, items, images)
