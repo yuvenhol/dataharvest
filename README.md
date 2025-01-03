@@ -8,7 +8,6 @@ AI时代，数据是一切的基石，DataHarvest 能够帮助快速获取干净
 
 ![DataHarvest](https://yuvenhol-1255563050.cos.ap-beijing.myqcloud.com/img/202407022046608.png)
 
-个人vx:yuvenhol02
 
 ## 搜索支持
 
@@ -160,4 +159,5 @@ print(doc)
 
 ## 鸣谢
 
-伙伴们如果觉着这个项目对你有帮助，那么请帮助点一个star✨。如果觉着存在问题或者有其他需求，那么欢迎在issue提出。当然，我们非常欢迎您加入帮忙完善。
+伙伴们如果觉着这个项目对你有帮助，那么请帮助点一个star✨。如果觉着存在问题或者有其他需求，那么欢迎在issue提出。当然，我们非常欢迎您加入帮忙完善。个人vx:yuvenhol02
+
