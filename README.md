@@ -8,6 +8,8 @@ AI时代，数据是一切的基石，DataHarvest 能够帮助快速获取干净
 
 ![DataHarvest](https://yuvenhol-1255563050.cos.ap-beijing.myqcloud.com/img/202407022046608.png)
 
+个人vx:yuvenhol02
+
 ## 搜索支持
 
 | 搜索引擎   | 官网                       | 支持 |
