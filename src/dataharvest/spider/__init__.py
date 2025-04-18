@@ -13,4 +13,5 @@ __all__ = [
     "SpiderConfig",
     "SslSpider",
     "XiaoHongShuSpider",
+    "WechatSpider",
 ]
