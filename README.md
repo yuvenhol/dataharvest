@@ -163,4 +163,4 @@ print(doc)
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=yuvenhol/dataharvest&type=Date)](https://www.star-history.com/#yuvenhol/dataharvest&Date)
+![Star History Chart](https://api.star-history.com/svg?repos=yuvenhol/dataharvest&type=Date)
