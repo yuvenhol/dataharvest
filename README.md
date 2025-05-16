@@ -161,3 +161,6 @@ print(doc)
 
 伙伴们如果觉着这个项目对你有帮助，那么请帮助点一个star✨。如果觉着存在问题或者有其他需求，那么欢迎在issue提出。当然，我们非常欢迎您加入帮忙完善。个人vx:yuvenhol02
 
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=yuvenhol/dataharvest&type=Date)](https://www.star-history.com/#yuvenhol/dataharvest&Date)
