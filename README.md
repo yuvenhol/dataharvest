@@ -1,61 +1,61 @@
 # DataHarvest
 
-DataHarvest 是一个用于数据搜索🔍、爬取🕷、清洗🧽的工具。
+DataHarvest is a tool for data search 🔍, crawling 🕷, and cleaning 🧽.
 
-AI时代，数据是一切的基石，DataHarvest 能够帮助快速获取干净有效的数据，开箱即用，灵活配置。
+In the AI era, data is the foundation of everything. DataHarvest helps you quickly obtain clean, usable data—ready to use out of the box with flexible configuration.
 
-除了工具本身之外，我们还会搜集整理一些技术方案，整理成[wiki](https://github.com/yuvenhol/dataharvest/wiki)。
+Beyond the tool itself, we also collect and organize technical solutions in our [wiki](https://github.com/yuvenhol/dataharvest/wiki).
 
 ![DataHarvest](https://yuvenhol-1255563050.cos.ap-beijing.myqcloud.com/img/202407022046608.png)
 
 
-## 搜索支持
+## Search Support
 
-| 搜索引擎   | 官网                       | 支持 |
-|--------|--------------------------|----|
-| tavily | https://docs.tavily.com/ | ✅  |
-| 天工搜索   | https://www.tiangong.cn/ | ✅  |
+| Search Engine | Website                    | Supported |
+|---------------|----------------------------|-----------|
+| Tavily        | https://docs.tavily.com/   | ✅        |
+| TianGong      | https://www.tiangong.cn/   | ✅        |
 
-## 数据爬取&清洗支持
+## Crawling & Cleaning Support
 
-| 网站       | 内容   | url pattern                | 爬取 | 清洗 |
-|----------|------|----------------------------|----|----|
-| 百度百科     | 词条   | baike.baidu.com/item/      | ✅  | ✅  |
-| 百度百家号    | 文章   | baijiahao.baidu.com/s/     | ✅  | ✅  |
-| B站       | 文章   | www.bilibili.com/read/     | ✅  | ✅  |
-| 腾讯网      | 文章   | new.qq.com/rain/a/         | ✅  | ✅  |
-| 360个人图书馆 | 文章   | www.360doc.com/content/    | ✅  | ✅  |
-| 360百科    | 词条   | baike.so.com/doc/          | ✅  | ✅  |
-| 搜狗百科     | 词条   | baike.sogou.com/v/         | ✅  | ✅  |
-| 搜狐       | 文章   | www.sohu.com/a/            | ✅  | ✅  |
-| 头条       | 文章   | www.toutiao.com/article/   | ✅  | ✅  |
-| 网易       | 文章   | www.163.com/\w+/article/.+ | ✅  | ✅  |
-| 微信公众号    | 文章   | weixin.qq.com/s/           | ✅  | ✅  |
-| 马蜂窝      | 文章   | www.mafengwo.cn/i/         | ✅  |    |
-| 小红书      | 超链帖子 | /xhslink.com/              | ✅  | ✅  |
+| Website              | Content Type | URL Pattern                | Crawl | Clean |
+|----------------------|--------------|----------------------------|-------|-------|
+| Baidu Baike          | Entry        | baike.baidu.com/item/      | ✅    | ✅    |
+| Baidu Baijiahao      | Article      | baijiahao.baidu.com/s/     | ✅    | ✅    |
+| Bilibili             | Article      | www.bilibili.com/read/     | ✅    | ✅    |
+| Tencent News         | Article      | new.qq.com/rain/a/         | ✅    | ✅    |
+| 360doc               | Article      | www.360doc.com/content/    | ✅    | ✅    |
+| 360 Baike            | Entry        | baike.so.com/doc/          | ✅    | ✅    |
+| Sogou Baike          | Entry        | baike.sogou.com/v/         | ✅    | ✅    |
+| Sohu                 | Article      | www.sohu.com/a/            | ✅    | ✅    |
+| Toutiao              | Article      | www.toutiao.com/article/   | ✅    | ✅    |
+| NetEase              | Article      | www.163.com/\w+/article/.+ | ✅    | ✅    |
+| WeChat Official Account | Article   | weixin.qq.com/s/           | ✅    | ✅    |
+| Mafengwo             | Article      | www.mafengwo.cn/i/         | ✅    |       |
+| Xiaohongshu (RED)    | Short-link post | /xhslink.com/           | ✅    | ✅    |
 
-其他情况使用基础playwright数据爬取和html2text数据清洗，但并未做特殊适配。
+For other cases, basic Playwright crawling and html2text cleaning are used, but no special site-specific adaptation is provided.
 
-## 安装
+## Installation
 
 ```shell
 pip install dataharvest
 playwright install
 ```
 
-## 使用
+## Usage
 
-==注意使用时最好使用虚拟环境，以免不必要的麻烦==
+**Note: It is recommended to use a virtual environment to avoid unnecessary issues.**
 
-分为搜索、爬虫、数据清洗三个主要模块，互相独立，您可以按需使用对应模块。
+The project is divided into three main modules—search, spider, and data cleaning—which are independent of each other. You can use each module as needed.
 
-爬取和清洗做了根据URL的自动策略匹配，您只需要使用AutoSpider和AutoPurifier即可。
+Crawling and cleaning support automatic strategy matching based on URL. You only need to use `AutoSpider` and `AutoPurifier`.
 
-## 最佳实践
+## Best Practices
 
-### 整合
+### Integration
 
-搜索+自动爬取+自动清洗
+Search + auto crawl + auto clean
 
 ```python
 import asyncio
@@ -71,12 +71,12 @@ loop = asyncio.get_event_loop()
 docs = loop.run_until_complete(asyncio.gather(*tasks))
 ```
 
-### 搜索
+### Search
 
 ```python
 from dataharvest.searcher import TavilySearcher
 
-api_key = "xxx"  # 或者设置环境变量 TAVILY_API_KEY
+api_key = "xxx"  # or set the environment variable TAVILY_API_KEY
 
 searcher = TavilySearcher(api_key)
 searcher.search("战国水晶杯")
@@ -89,7 +89,7 @@ SearchResult(keyword='战国水晶杯', answer=None, images=None, items=[
                      content='')])
 ```
 
-### 爬取
+### Crawling
 
 ```python
 from dataharvest.spider import AutoSpider
@@ -100,12 +100,12 @@ doc = auto_spider.crawl(url)
 print(doc)
 ```
 
-### 代理
+### Proxy
 
-很多情况下我们需要配置代理，比如小红书和马蜂窝。
-我们需要实现 一个代理生成类，并实现他的__call__方法。
+In many cases, you need to configure a proxy—for example, for Xiaohongshu and Mafengwo.
+You need to implement a proxy generator class and define its `__call__` method.
 
-可以在爬虫初始化时，将配置添加进去，也可以在调用时传入。
+You can pass the configuration when initializing the spider, or provide it at call time.
 
 ```python
 from dataharvest.proxy.base import BaseProxy, Proxy
@@ -139,7 +139,7 @@ def test_proxy_call():
 
 ```
 
-### 清洗
+### Cleaning
 
 ```python
 from dataharvest.purifier import AutoPurifier
@@ -154,12 +154,12 @@ doc = auto_purifier.purify(doc)
 print(doc)
 ```
 
-效果：
+Example output:
 ![](https://yuvenhol-1255563050.cos.ap-beijing.myqcloud.com/img/202407052255246.png)
 
-## 鸣谢
+## Acknowledgments
 
-伙伴们如果觉着这个项目对你有帮助，那么请帮助点一个star✨。如果觉着存在问题或者有其他需求，那么欢迎在issue提出。当然，我们非常欢迎您加入帮忙完善。个人vx:yuvenhol02
+If you find this project helpful, please give it a star ✨. If you encounter any issues or have other requirements, feel free to open an issue. We also welcome contributions to help improve the project. Contact: WeChat `yuvenhol02`
 
 ## Star History
 
